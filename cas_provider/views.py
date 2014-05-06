@@ -66,7 +66,10 @@ def validate(request):
     if service is not None and ticket_string is not None:
         try:
             ticket = ServiceTicket.objects.get(ticket=ticket_string)
-            username = ticket.user.username
+            if hasattr(settings, 'CAS_USER_UNIQUE_FIELD'):
+                username = getattr(ticket.user, settings.CAS_USER_UNIQUE_FIELD)
+            else:
+                username = ticket.user.username
             ticket.delete()
             return HttpResponse("yes\n%s\n" % username)
         except:

@@ -2,6 +2,18 @@
 django-cas-provider
 ===================
 
+Updates by AJ:
+==============
+
+- Added optional setting to use a field on User instances other than username, like:
+   CAS_USER_UNIQUE_FIELD = 'email'
+   If a setting is provided, that will be used, otherwise username will be used (so it is compatible with previous code).
+   This is the field that is passed to the consumer to identify the logged in user.
+
+
+Original Readme:
+================
+
 ---------------------------------
 Chris Williams <chris@nitron.org>
 ---------------------------------
