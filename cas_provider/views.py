@@ -56,7 +56,7 @@ def login(request, template_name='cas/login.html', success_redirect=None ):
                 else:
                     errors.append('This account is disabled.')
             else:
-                    errors.append('Incorrect username and/or password.')
+                    errors.append('Incorrect username and/or password.')                
     form = LoginForm(service)
     return render_to_response(template_name, {'form': form, 'errors': errors}, context_instance=RequestContext(request))
     
@@ -72,11 +72,14 @@ def validate(request):
                 username = ticket.user.username
             ticket.delete()
             return HttpResponse("yes\n%s\n" % username)
-        except:
-            pass
+        except Exception, e:
+            print e.message
     return HttpResponse("no\n\n")
     
 def logout(request, template_name='cas/logout.html'):
     url = request.GET.get('url', None)
     auth_logout(request)
+    if url.strip().startswith('http'):
+        return HttpResponseRedirect(url)
     return render_to_response(template_name, {'url': url}, context_instance=RequestContext(request))
+    
