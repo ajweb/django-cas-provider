@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class ServiceTicket(models.Model):
-    user = models.ForeignKey(User)
-    service = models.URLField(verify_exists=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    service = models.URLField()
     ticket = models.CharField(max_length=256)
     created = models.DateTimeField(auto_now=True)
     
